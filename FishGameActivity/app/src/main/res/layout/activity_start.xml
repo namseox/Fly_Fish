@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".StartActivity">
+
+
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/brandon2"
+            android:padding="@dimen/_8sdp"
+            android:text="CATEGORIES"
+            android:textAllCaps="true"
+            android:textColor="@color/nearBlack"
+            android:textSize="@dimen/_26ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_20sdp" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rlt"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_115sdp"
+            android:layout_margin="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_8sdp">
+
+            <RelativeLayout
+                android:id="@+id/topic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FAD371"
+                android:elevation="@dimen/_7sdp"
+                android:translationZ="@dimen/_7sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/i_ciel_soup_of_justice"
+                    android:padding="@dimen/_14sdp"
+                    android:text="PLAY GAME"
+                    android:textColor="@color/nearBlack"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/_23ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/_14sdp"
+                    android:text="EXPAND ALL"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_120sdp"
+            android:elevation="@dimen/_7sdp"
+            android:src="@drawable/play"
+            android:translationZ="@dimen/_7sdp"
+            app:layout_constraintEnd_toEndOf="@id/rlt"
+            app:layout_constraintTop_toTopOf="@id/rlt" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_115sdp"
+            android:layout_margin="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rlt">
+
+            <RelativeLayout
+                android:id="@+id/vocabulary"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#73CAF1"
+                android:elevation="@dimen/_7sdp"
+                android:translationZ="@dimen/_7sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_115sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:elevation="@dimen/_10sdp"
+                    android:src="@drawable/score"
+                    android:translationZ="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/i_ciel_soup_of_justice"
+                    android:padding="@dimen/_14sdp"
+                    android:text="HIGH SCORE"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/_20sdp"
+                    android:text="EXPAND ALL"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_115sdp"
+            app:cardCornerRadius="@dimen/_15sdp"
+            app:cardElevation="@dimen/_8sdp"
+            android:layout_margin="@dimen/_20sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv">
+
+            <RelativeLayout
+                android:id="@+id/setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/skin"
+                android:elevation="@dimen/_7sdp"
+                android:translationZ="@dimen/_7sdp">
+
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_115sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="13dp"
+                    android:elevation="@dimen/_10sdp"
+                    android:src="@drawable/setting"
+                    android:translationZ="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="@font/i_ciel_soup_of_justice"
+                    android:padding="@dimen/_14sdp"
+                    android:text="SETTING"
+                    android:textColor="@color/nearBlack"
+                    android:textColorHint="@color/black"
+                    android:textSize="@dimen/_18ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentBottom="true"
+                    android:padding="@dimen/_20sdp"
+                    android:text="EXPAND ALL"
+                    android:textColor="@color/nearBlack"
+                    android:textColorHint="@color/black"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

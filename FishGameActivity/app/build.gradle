@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        applicationId "com.example.fishgameactivity"
+        minSdk 26
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation 'com.google.firebase:firebase-database:20.1.0'
+    def roomVersion = "2.4.3"
+    def lifecycle_version = "2.6.0-alpha01"
+    def fragment_version = "1.5.1"
+    def exoPlayer = "2.18.1"
+    def sp_dp_version = "1.0.6"
+    def nav_version = "2.5.2"
+
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    //spd_ssp
+    implementation "com.intuit.sdp:sdp-android:$sp_dp_version"
+    implementation "com.intuit.ssp:ssp-android:$sp_dp_version"
+
+    //fireBase
+    implementation 'com.google.firebase:firebase-auth:21.0.6'
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-database:20.0.5'
+    implementation 'com.google.firebase:firebase-firestore:24.2.2'
+}

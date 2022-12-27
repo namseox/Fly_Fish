@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "446572579944",
+    "project_id": "fishgame-a38f9",
+    "storage_bucket": "fishgame-a38f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446572579944:android:9bc85e7f7562596174bfdd",
+        "android_client_info": {
+          "package_name": "com.example.fishgameactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446572579944-6o75bmf1rc0k0mggo8tu9fncoeapbs4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAV9PEoCY_VXt0L_wVNOfnw5843ytBH0cM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446572579944-6o75bmf1rc0k0mggo8tu9fncoeapbs4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

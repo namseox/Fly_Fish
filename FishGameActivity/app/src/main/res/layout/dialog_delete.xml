@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_25sdp"
+    android:paddingEnd="@dimen/_25sdp">
+
+    <LinearLayout
+        android:id="@+id/layoutDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_40sdp"
+        android:background="@drawable/bg_linear_layout"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/txtLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:fontFamily="@font/i_ciel_soup_of_justice"
+            android:text="Do you want to sign out?"
+            android:textAlignment="center"
+            android:textColor="@color/nearBlack"
+            android:textSize="@dimen/_14sdp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/_45sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:background="@drawable/bg_img_close"
+        android:padding="@dimen/_8sdp"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toTopOf="@+id/layoutDialog"
+        app:layout_constraintEnd_toEndOf="@+id/layoutDialog"
+        app:layout_constraintStart_toStartOf="@+id/layoutDialog"
+        app:layout_constraintTop_toTopOf="@+id/layoutDialog" />
+
+    <Button
+        android:id="@+id/btnConFirmDialog"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_45sdp"
+        android:backgroundTint="@color/nearBlack"
+        android:fontFamily="@font/i_ciel_soup_of_justice"
+        android:text="CONFIRMAR"
+        android:textAllCaps="false"
+        android:textColor="@color/gold"
+        android:textSize="@dimen/_11ssp"
+        app:layout_constraintBottom_toBottomOf="@+id/layoutDialog"
+        app:layout_constraintEnd_toEndOf="@+id/layoutDialog"
+        app:layout_constraintStart_toStartOf="@+id/layoutDialog"
+        app:layout_constraintTop_toBottomOf="@+id/layoutDialog" />
+
+    <Button
+        android:id="@+id/btnCancelDialog"
+        android:layout_width="@dimen/_80sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:alpha="0.4"
+        android:backgroundTint="@android:color/darker_gray"
+        android:fontFamily="@font/i_ciel_soup_of_justice"
+        android:gravity="center"
+        android:text="CANCEL"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_8ssp"
+        app:layout_constraintEnd_toEndOf="@+id/btnConFirmDialog"
+        app:layout_constraintStart_toStartOf="@+id/btnConFirmDialog"
+        app:layout_constraintTop_toBottomOf="@+id/btnConFirmDialog" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
