@@ -15,13 +15,19 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.fishgameactivity.utils.BitmapUtils;
+import com.google.gson.Gson;
+
 import com.example.fishgameactivity.callback.callback;
 import com.example.fishgameactivity.dialog.ShowDialog;
+import com.example.fishgameactivity.model.Skin;
 import com.example.fishgameactivity.model.UserHighScore;
+import com.example.fishgameactivity.utils.SharedPreferenceUtils;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -31,7 +37,8 @@ public class FlyingFishView extends View {
     private ShowDialog showDialog;
     private FirebaseDatabase db;
     private DatabaseReference ref;
-
+    Skin skin;
+    Float volum;
     private Boolean isLevel1 = false;
     private Boolean isLevel2 = false;
     private Boolean isLevel3 = false;
@@ -85,23 +92,29 @@ public class FlyingFishView extends View {
         this.callBackLoadBill = callBackLoadBill;
     }
 
-    public FlyingFishView(Context context, String name) {
+    public FlyingFishView(Context context, String name, Skin skin, int volum) {
         super(context);
         this.context = context;
         this.name = name;
+        Log.d("abc",volum+"");
+        this.volum = volum/100f;
+        Log.d("abc",this.volum+"xxx");
         showDialog = new ShowDialog(context);
         db = FirebaseDatabase.getInstance();
         ref = db.getReference();
+        this.skin = skin;
+        BitmapUtils bitmapUtil = new BitmapUtils(context);
 
-        fish[0] = BitmapFactory.decodeResource(getResources(), R.drawable.fish24); //SET CÁ SIZE 32, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
+        fish[0] = bitmapUtil.loadBitmap(skin.getId(), 64, 64); //SET CÁ SIZE 32, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
         fish[1] = BitmapFactory.decodeResource(getResources(), R.drawable.fishn32); //SET CÁ, TÙY THUỘC VÀO KÍCH CỠ HÌNH (3)
-        fish[2] = BitmapFactory.decodeResource(getResources(), R.drawable.fish32); //SET CÁ SIZE 64
-        fish[3] = BitmapFactory.decodeResource(getResources(), R.drawable.fish48); //SET CÁ SIZE 128
-        fishDishes[0] = BitmapFactory.decodeResource(getResources(), R.drawable.fishdishes24); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
-        fishDishes[1] = BitmapFactory.decodeResource(getResources(), R.drawable.fishdishesx24); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
-        fishDishes[2] = BitmapFactory.decodeResource(getResources(), R.drawable.fishdishes32); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
-        fishDishes[4] = BitmapFactory.decodeResource(getResources(), R.drawable.fishdishesx32); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
-        fishDishes[3] = BitmapFactory.decodeResource(getResources(), R.drawable.fishdishesx48); //SET CÁ SIZE 64
+        fish[2] = bitmapUtil.loadBitmap(skin.getId(), 128, 128);  //SET CÁ SIZE 64
+        fish[3] = bitmapUtil.loadBitmap(skin.getId(), 192, 192);
+        ; //SET CÁ SIZE 128
+        fishDishes[0] = bitmapUtil.loadBitmap(R.drawable.fishdishesx48, 64, 64); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
+        fishDishes[1] = bitmapUtil.loadBitmap(R.drawable.fishdishesx24, 64, 64); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
+        fishDishes[2] = bitmapUtil.loadBitmap(R.drawable.fishdishes32, 128, 128); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
+        fishDishes[4] = bitmapUtil.loadBitmap(R.drawable.fishdishesx32, 128, 128); //SET CÁ DISHES, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
+        fishDishes[3] = bitmapUtil.loadBitmap(R.drawable.fishdishesx48, 192, 192); //SET CÁ SIZE 64
         ocean = BitmapFactory.decodeResource(getResources(), R.drawable.oceanlanscape); //SET background, TÙY THUỘC VÀO KÍCH CỠ HÌNH (2)
 //        levelUp = BitmapFactory.decodeResource(getResources(), R.drawable.levelup64); //SET levelUp (2)
 
@@ -152,9 +165,15 @@ public class FlyingFishView extends View {
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 loadedsound = true;
             }
+
         });
+
+
+//        soundPool.setVolume(soundEat,0,0);
+//        soundPool.setVolume(soundDie,0,0);
         soundEat = this.soundPool.load(context, R.raw.eat, 1);
         soundDie = this.soundPool.load(context, R.raw.die, 1);
+
 
         countDownTimer = new CountDownTimer(120000, 1000) {
             @Override
@@ -205,21 +224,21 @@ public class FlyingFishView extends View {
             fishY = maxFishY;
         }
         fishSpeed = fishSpeed + 2;
-        if (touch && score < 100) {
+        if (touch && score < 50) {
             canvas.drawBitmap(fish[0], fishX, fishY, null); //NẾU CHẠM VÀO MÀN HÌNH VÀ SỐ ĐIỂM <= 100 SẼ SET CÁ fish[1]
             touch = false;
             isLevel1 = true;
             isLevel2 = false;
             isLevel3 = false;
-        } else if (!touch && score < 100) {
+        } else if (!touch && score < 50) {
             canvas.drawBitmap(fish[0], fishX, fishY, null); //KHÔNG CHẠM VÀO MÀN HÌNH VÀ SỐ ĐIỂM <= 100 SẼ SET CÁ fish[0]
-        } else if (touch && score >= 100 && score < 250) { // && score <= 200
+        } else if (touch && score >= 50 && score < 250) { // && score <= 200
             canvas.drawBitmap(fish[2], fishX, fishY, null); //NẾU CHẠM VÀO MÀN HÌNH VÀ 50 <= SỐ ĐIỂM <= 250 SẼ SET CÁ fish[2]
             touch = false;
             isLevel1 = false;
             isLevel2 = true;
             isLevel3 = false;
-        } else if (!touch && score >= 100 && score < 250) { // && score <= 200
+        } else if (!touch && score >= 50 && score < 250) { // && score <= 200
             canvas.drawBitmap(fish[2], fishX, fishY, null); //NẾU CHẠM VÀO MÀN HÌNH VÀ 50 <= SỐ ĐIỂM <= 250 SẼ SET CÁ fish[2]
         } else if (touch && score >= 250) { // && score <= 200
             canvas.drawBitmap(fish[3], fishX, fishY, null); //NẾU CHẠM VÀO MÀN HÌNH VÀ SỐ ĐIỂM >= 250 SẼ SET CÁ fish[2]
@@ -233,15 +252,16 @@ public class FlyingFishView extends View {
 
         //SET CÁ DISHES CON THỨ 3
         fishDishesThirdX = fishDishesThirdX - fishDishesThirdSpeed;
+
         if (hitBallChecker(fishDishesThirdX, fishDishesThirdY)) {
             fishDishesThirdX = -100;
-            if (score >= 100) {
-                int streamId = this.soundPool.play(this.soundEat, (float) 0.5, (float) 0.5, 1, 0, 1f);
+            if (score >= 50) {
+                int streamId = this.soundPool.play(this.soundEat, (float) volum, (float) volum, 1, 0, 1f);
                 score = score + 20;
             } else {
-                int streamId = this.soundPool.play(this.soundDie, (float) 0.5, (float) 0.5, 1, 0, 1f);
+                int streamId = this.soundPool.play(this.soundDie, (float) volum, (float) volum, 1, 0, 1f);
                 countDownTimer.cancel();
-                callBackLoadBill.OnItemDirect(String.valueOf(score),"GAME OVER", name);
+                callBackLoadBill.OnItemDirect(String.valueOf(score), "GAME OVER", name);
                 ref.child(name).setValue(new UserHighScore(name, String.valueOf(score)));
             }
         }
@@ -255,11 +275,11 @@ public class FlyingFishView extends View {
         fishDishesThirdX2 = fishDishesThirdX2 - fishDishesThirdSpeed2;
         if (hitBallChecker(fishDishesThirdX2, fishDishesThirdY2)) {
             fishDishesThirdX2 = -100;
-            if (score >= 100) {
-                int streamId = this.soundPool.play(this.soundEat, (float) 0.5, (float) 0.5, 1, 0, 1f);
+            if (score >= 50) {
+                int streamId = this.soundPool.play(this.soundEat, (float) volum, (float) volum, 1, 0, 1f);
                 score = score + 20;
             } else {
-                int streamId = this.soundPool.play(this.soundDie, (float) 0.5, (float) 0.5, 1, 0, 1f);
+                int streamId = this.soundPool.play(this.soundDie, (float) volum, (float) volum, 1, 0, 1f);
                 countDownTimer.cancel();
                 callBackLoadBill.OnItemDirect(String.valueOf(score), "GAME OVER", name);
                 ref.child(name).setValue(new UserHighScore(name, String.valueOf(score)));
@@ -272,16 +292,16 @@ public class FlyingFishView extends View {
         }
         canvas.drawBitmap(fishDishes[4], fishDishesThirdX2, fishDishesThirdY2, fishDishesThirdPaint2); //SET CÁ DISHES (3)
 
-        if (score >= 100) {
+        if (score >= 50) {
             //SET CÁ DISHES CON THỨ 4
             fishDishesForthX = fishDishesForthX - fishDishesForthSpeed;
             if (hitBallChecker(fishDishesForthX, fishDishesForthY)) {
                 fishDishesForthX = -100;
                 if (score >= 250) {
-                    int streamId = this.soundPool.play(this.soundEat, (float) 0.5, (float) 0.5, 1, 0, 1f);
+                    int streamId = this.soundPool.play(this.soundEat, (float) volum, (float) volum, 1, 0, 1f);
                     score = score + 50;
                 } else {
-                    int streamId = this.soundPool.play(this.soundDie, (float) 0.5, (float) 0.5, 1, 0, 1f);
+                    int streamId = this.soundPool.play(this.soundDie, (float) volum, (float) volum, 1, 0, 1f);
                     countDownTimer.cancel();
                     @SuppressLint("DrawAllocation") Intent intent = new Intent(getContext(), GameOverActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -289,6 +309,7 @@ public class FlyingFishView extends View {
                     bundle.putString("score", String.valueOf(score));
                     bundle.putString("timeup", "GAME OVER");
                     bundle.putString("name", name);
+                    Log.d("nnn999", name);
                     intent.putExtras(bundle);
                     getContext().startActivity(intent);
                     ref.child(name).setValue(new UserHighScore(name, String.valueOf(score)));
@@ -305,7 +326,7 @@ public class FlyingFishView extends View {
         //SET CÁ DISHES CON THỨ 1
         fishDishesFirstX = fishDishesFirstX - fishDishesFirstSpeed;
         if (hitBallChecker(fishDishesFirstX, fishDishesFirstY)) {
-            int streamId = this.soundPool.play(this.soundEat, (float) 0.5, (float) 0.5, 1, 0, 1f);
+            int streamId = this.soundPool.play(this.soundEat, (float) volum, (float) volum, 1, 0, 1f);
             score = score + 10;
             fishDishesFirstX = -100;
         }
@@ -318,7 +339,7 @@ public class FlyingFishView extends View {
         //SET CÁ DISHES CON THỨ 2
         fishDishesSecondX = fishDishesSecondX - fishDishesSecondSpeed;
         if (hitBallChecker(fishDishesSecondX, fishDishesSecondY)) {
-            int streamId = this.soundPool.play(this.soundEat, (float) 0.5, (float) 0.5, 1, 0, 1f);
+            int streamId = this.soundPool.play(this.soundEat, (float) volum, (float) volum, 1, 0, 1f);
             score = score + 10;
             fishDishesSecondX = -100;
         }
@@ -330,20 +351,20 @@ public class FlyingFishView extends View {
 
         canvas.drawText("Score: " + score, 20, 60, scorePaint); //SET VẼ ĐIỂM (6)
 
-        canvas.drawText("Time: " + time + "s", canvasWidth-300, 60, timePaint); //SET VẼ TIME (6)
+        canvas.drawText("Time: " + time + "s", canvasWidth - 300, 60, timePaint); //SET VẼ TIME (6)
     }
 
     public boolean hitBallChecker(int x, int y) {
         if (isLevel1) {
-            if (fishX < x && x < (fishX + fish[0].getWidth()) && fishY < y && y < (fishY + fish[0].getHeight())) {
+            if (((fishX < x && x < (fishX + fish[0].getWidth())) || (fishX > x && fishX < x + fish[0].getWidth())) && fishY < y && y < (fishY + fish[0].getHeight())) {
                 return true;
             }
         } else if (isLevel2) {
-            if (fishX < x && x < (fishX + fish[2].getWidth()) && fishY < y && y < (fishY + fish[2].getHeight())) {
+            if (((fishX < x && x < (fishX + fish[2].getWidth())) || (fishX > x && fishX < x + fish[2].getWidth())) && fishY < y && y < (fishY + fish[2].getHeight())) {
                 return true;
             }
         } else if (isLevel3) {
-            if (fishX < x && x < (fishX + fish[3].getWidth()) && fishY < y && y < (fishY + fish[3].getHeight())) {
+            if (((fishX < x && x < (fishX + fish[3].getWidth())) || (fishX > x && fishX < x + fish[3].getWidth())) && fishY < y && y < (fishY + fish[3].getHeight())) {
                 return true;
             }
         } else {

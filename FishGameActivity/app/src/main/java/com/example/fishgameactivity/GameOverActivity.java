@@ -61,6 +61,14 @@ public class GameOverActivity extends AppCompatActivity {
 //            }
 //        });
 
+        binding.imvBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameOverActivity.this, StartActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         DatabaseReference friendsHighScore = ref;
         friendsHighScore.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,17 +112,6 @@ public class GameOverActivity extends AppCompatActivity {
             binding.btnConfirm.setVisibility(View.GONE);
         }
 
-        binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GameOverActivity.this, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", name);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         highScoreAdapter.setOnClickListener(new callback.CallBackDelete() {
             @SuppressLint("NotifyDataSetChanged")
@@ -127,7 +124,6 @@ public class GameOverActivity extends AppCompatActivity {
         });
 
     }
-
     private void onSetRecyclerView() {
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         itemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.divider_recyclerview)));
